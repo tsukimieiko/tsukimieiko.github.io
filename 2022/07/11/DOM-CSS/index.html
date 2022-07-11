@@ -1,0 +1,208 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="Jasinn"><meta name="copyright" content="Jasinn"><meta name="generator" content="Hexo 6.2.0"><meta name="theme" content="hexo-theme-yun"><title>DOM操作与CSS选择器 | NO ThankU</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/star-markdown-css@0.3.3/dist/yun/yun-markdown.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/prism-theme-vars/base.css"><script src="https://fastly.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>function initScrollReveal() {
+  [".post-card",".markdown-body img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+}
+document.addEventListener("DOMContentLoaded", initScrollReveal);
+document.addEventListener("pjax:success", initScrollReveal);
+</script><link rel="icon" type="image/svg+xml" href="https://api.iconify.design/charm:moon.svg"><link rel="mask-icon" href="https://api.iconify.design/charm:moon.svg" color="#0078E7"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
+    window.Yun = {}
+    window.CONFIG = {"hostname":"www.aozakiaoko.cn","root":"/","title":"放课后来一杯茶","version":"1.10.4","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"想要搜些什么呢？","empty":"We didn't find any results for the search: ${query}.","hits":"${hits} results found","hits_time":"${hits} results found in ${time} ms"},"anonymous_image":"https://cdn.yunyoujun.cn/img/avatar/none.jpg","fireworks":{"colors":null},"vendors":{"darken":"https://fastly.jsdelivr.net/npm/darken@1.5.0"}};
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/hexo-theme-yun.js" type="module"></script><meta name="description" content="一些DOM的简单操作与CSS的选择器与伪类与伪元素">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DOM操作与CSS选择器">
+<meta property="og:url" content="https://www.aozakiaoko.cn/2022/07/11/DOM-CSS/index.html">
+<meta property="og:site_name" content="NO ThankU">
+<meta property="og:description" content="一些DOM的简单操作与CSS的选择器与伪类与伪元素">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-07-11T14:20:22.000Z">
+<meta property="article:modified_time" content="2022-07-11T13:50:25.854Z">
+<meta property="article:author" content="Jasinn">
+<meta property="article:tag" content="CSS">
+<meta property="article:tag" content="DOM">
+<meta property="article:tag" content="HTML">
+<meta name="twitter:card" content="summary"><script>(function() {
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+  const setting = localStorage.getItem('darken-mode') || 'auto'
+  if (setting === 'dark' || (prefersDark && setting !== 'light'))
+    document.documentElement.classList.toggle('dark', true)
+})()</script></head><body><script src="https://code.iconify.design/2/2.1.1/iconify.min.js"></script><script>// Define global variable
+IconifyProviders = {
+  // Empty prefix: overwrite default API provider configuration
+  '': {
+    // Use custom API first, use Iconify public API as backup
+    resources: [
+        'https://api.iconify.design',
+    ],
+    // Wait for 1 second before switching API hosts
+    rotate: 1000,
+  },
+};</script><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="Table of Contents"><span class="icon iconify" data-icon="ri:list-ordered"></span></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="Overview"><span class="icon iconify" data-icon="ri:passport-line"></span></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="Jasinn"><img width="96" loading="lazy" src="/head.png" alt="Jasinn"><span class="site-author-status" title="/ff">🌙</span></a><div class="site-author-name"><a href="/about/">Jasinn</a></div><span class="site-name">NO ThankU</span><sub class="site-subtitle"></sub><div class="site-description">该去睡觉了</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="Home"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:home-4-line"></span></span></a><div class="site-state-item"><a href="/archives/" title="Archives"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:archive-line"></span></span><span class="site-state-item-count">5</span></a></div><div class="site-state-item"><a href="/categories/" title="Categories"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:folder-2-line"></span></span><span class="site-state-item-count">4</span></a></div><div class="site-state-item"><a href="/tags/" title="Tags"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="site-state-item-count">8</span></a></div><a class="site-state-item hty-icon-button" href="/about/" title="关于"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:settings-line"></span></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="/atom.xml" title="RSS" target="_blank" style="color:orange"><span class="icon iconify" data-icon="ri:rss-line"></span></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/tsukimieiko" title="GitHub" target="_blank" style="color:#6e5494"><span class="icon iconify" data-icon="ri:github-line"></span></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="/wechat.png" title="微信" target="_blank" style="color:#1AAD19"><span class="icon iconify" data-icon="ri:wechat-2-line"></span></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://space.bilibili.com/24970578" title="哔哩哔哩" target="_blank" style="color:#FF8EB3"><span class="icon iconify" data-icon="ri:bilibili-line"></span></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://www.yuque.com/yingyuying" title="语雀" target="_blank" style="color:#38D17C"><span class="icon iconify" data-icon="ant-design:yuque-outlined"></span></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="mailto:hyouka1227@163.com" title="E-Mail" target="_blank" style="color:#8E71C1"><span class="icon iconify" data-icon="ri:mail-line"></span></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><span class="icon iconify" data-icon="ri:contrast-2-line"></span></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#DOM"><span class="toc-number">1.</span> <span class="toc-text">DOM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DOCUMENT"><span class="toc-number">2.</span> <span class="toc-text">DOCUMENT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-%E9%80%89%E6%8B%A9%E5%99%A8"><span class="toc-number">3.</span> <span class="toc-text">CSS 选择器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-%E4%BC%AA%E7%B1%BB"><span class="toc-number">4.</span> <span class="toc-text">CSS 伪类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-%E4%BC%AA%E5%85%83%E7%B4%A0"><span class="toc-number">5.</span> <span class="toc-text">CSS 伪元素</span></a></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="https://www.aozakiaoko.cn/2022/07/11/DOM-CSS/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="Jasinn"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="NO ThankU"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">DOM操作与CSS选择器</h1><div class="post-meta"><div class="post-time"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-line"></span></span> <time title="Created: 2022-07-11 22:20:22" itemprop="dateCreated datePublished" datetime="2022-07-11T22:20:22+08:00">2022-07-11</time></div><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><span class="icon iconify" data-icon="ri:folder-line"></span></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/CSS/" style="--text-color:#61dafb" itemprop="url" rel="index"><span itemprop="text">CSS</span></a></span> > <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/CSS/HTML/" style="--text-color:#026E00" itemprop="url" rel="index"><span itemprop="text">HTML</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag-item" href="/tags/CSS/" style="--text-color:#1068d1"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="tag-name">CSS</span></a><a class="tag-item" href="/tags/DOM/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="tag-name">DOM</span></a><a class="tag-item" href="/tags/HTML/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="tag-name">HTML</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><p>一些<code>DOM</code>的简单操作与<code>CSS</code>的选择器与伪类与伪元素</p>
+<span id="more"></span>
+
+<h2 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h2><p><code>DOM</code>（<code>Document Object Model</code>——文档对象模型）</p>
+<h2 id="DOCUMENT"><a href="#DOCUMENT" class="headerlink" title="DOCUMENT"></a>DOCUMENT</h2><ul>
+<li><p><code>document.getElementById(id)</code>        返回匹配特定<code>ID</code>的元素        </p>
+</li>
+<li><p><code>document.getElementByClassName(class)</code>        返回包含所有指定类名的子元素的类数组对象</p>
+</li>
+<li><p><code>document.getElementByTagName(tag)</code>        返回包括所有给定标签名称元素的<code>HTML</code>集合</p>
+</li>
+<li><p><code>document.querySelector(selectors)</code>        返回与指定选择器匹配的第一个<code>Element</code>对象</p>
+</li>
+<li><p><code>document.querySelectorAll(selectors)</code>        返回与指定的选择器匹配的文档中的元素列表</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 获取文档中第一个 &lt;span> 元素</span>
+document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">"span"</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 获取文档中 class="demo" 的第一个元素</span>
+document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">".demo"</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 获取文档中 class="demo" 的第一个 &lt;span> 元素</span>
+document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">"span.demo"</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 获取文档中有 target 属性的第一个 &lt;a> 元素</span>
+document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">"a[target]"</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 设置文档中第一个 &lt;span> 的背景颜色为粉红色</span>
+document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">"span"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>style<span class="token punctuation">.</span>backgroundColor <span class="token operator">=</span> <span class="token string">"pink"</span>
+
+<span class="token comment">// class 为 user-panel main 的 div 内包含一个 name 属性为 login 的 input</span>
+document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">"div.user-panel.main input[name='login']"</span><span class="token punctuation">)</span>	</code></pre>
+</li>
+<li><p><code>node.firstElementChild</code>        返回对象的<strong>第一</strong>个子元素，没有则为<code>null</code></p>
+</li>
+<li><p><code>node.lastElementChild</code>        返回对象的<strong>最后</strong>一子元素，没有则为<code>null</code></p>
+</li>
+<li><p><code>node.parentNode</code>        返回<code>node</code>的父节点</p>
+</li>
+<li><p><code>node.children()</code>        返回<code>node</code>的子节点</p>
+</li>
+<li><p><code>document.createElement(tag_name)</code>        创建由标签名称<code>tag_name</code>指定的<code>HTML</code>元素</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">add_element</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> new_div <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">"div"</span><span class="token punctuation">)</span>
+    <span class="token keyword">const</span> new_content <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createTextNode</span><span class="token punctuation">(</span><span class="token string">"Hi there and greetings!"</span><span class="token punctuation">)</span>
+    new_div<span class="token punctuation">.</span><span class="token function">appendChild</span><span class="token punctuation">(</span>new_content<span class="token punctuation">)</span>
+
+    <span class="token keyword">const</span> current_div <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">"id"</span><span class="token punctuation">)</span>
+    document<span class="token punctuation">.</span>body<span class="token punctuation">.</span><span class="token function">insertBefore</span><span class="token punctuation">(</span>new_div<span class="token punctuation">,</span> current_div<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span></code></pre>
+</li>
+<li><p><code>node.cloneNode(deep)</code>        克隆节点并返回，<code>deep</code>为<code>true</code>深度克隆</p>
+</li>
+<li><p><code>node.insertBefore(new, refer)</code>        在参考节点之前插入拥有指定父节点的子节点并返回</p>
+</li>
+<li><p><code>parent.removeChild(child)</code>        删除一个子节点并返回删除的节点</p>
+</li>
+<li><p><code>node.append(node)</code>        在最后一个子节点之后插入一组节点</p>
+</li>
+<li><p><code>node.prepend(node)</code>        在第一个子节点之前插入一组节点</p>
+</li>
+<li><p><code>node.appendChild(node)</code>        将节点加到指定节点的子节点的末尾并返回</p>
+<ul>
+<li>若被插入的节点<strong>已存在于文档树</strong>中，<code>appendChild()</code>只会将其从原先位置<strong>移动到新位置</strong></li>
+<li>若被插入的节点<strong>已拥有父节点</strong>，在被传递给此方法后，先<strong>移除</strong>，再<strong>插入</strong>到新的位置</li>
+<li>若要<strong>保留</strong>已在文档中的节点，可先使用<code>node.cloneNode()</code>创建一个副本</li>
+</ul>
+</li>
+<li><p><code>node.append(node|str)</code>与<code>node.appendChild(node)</code>差异</p>
+<ul>
+<li><code>node.append()</code><strong>可追加</strong><code>DOMString</code>对象，而<code>node.appendChild()</code>只接受<code>node</code>对象</li>
+<li><code>node.append()</code><strong>无返回值</strong>，<code>Node.appendChild()</code>返回追加的<code>node</code>对象。</li>
+<li><code>node.append()</code><strong>可追加多个</strong>节点和字符串，<code>node.appendChild()</code>只可追加一个节点</li>
+</ul>
+</li>
+</ul>
+<h2 id="CSS-选择器"><a href="#CSS-选择器" class="headerlink" title="CSS 选择器"></a>CSS 选择器</h2><ul>
+<li><p><code>* &#123;&#125;</code>        通配选择器（所有元素）</p>
+</li>
+<li><p><code>p &#123;&#125;</code>        标签选择器</p>
+</li>
+<li><p><code>.class &#123;&#125;</code>        类选择器</p>
+<ul>
+<li><code>a.value &#123;&#125;</code>        匹配<code>class</code>属性包含<code>value</code>的所有<code>&lt;a&gt;</code>元素</li>
+</ul>
+</li>
+<li><p><code>#id &#123;&#125;</code>        <code>ID</code>选择器（区分大小写）（<code>ID</code>不能重复）</p>
+</li>
+<li><p><code>div, span &#123;&#125;</code>        选择器列表</p>
+</li>
+<li><p><code>div span &#123;&#125;</code>        后代选择器</p>
+<ul>
+<li><code>span a &#123;&#125;</code>        对<code>&lt;span&gt;</code>中的<code>&lt;a&gt;</code>元素应用样式（可以隔很多层）</li>
+</ul>
+</li>
+<li><p><code>div&gt;span &#123;&#125;</code>        直接子代选择器</p>
+<ul>
+<li><code>span &gt; a &#123;&#125;</code>        选择作为<code>&lt;span&gt;</code><strong>直接子元素</strong>的所有<code>&lt;a&gt;</code>元素</li>
+<li><code>table.company td &gt; p &#123;&#125;</code>        选择<code>class</code>为<code>table</code>的<code>td</code>下的<code>&lt;p&gt;</code>元素</li>
+</ul>
+</li>
+<li><p><code>A~B &#123;&#125;</code>        一般兄弟选择器，不需要紧邻，在<code>A</code>后的<code>B</code>就行（兄弟元素）</p>
+</li>
+<li><p><code>A+B &#123;&#125;</code>        紧邻兄弟选择器，紧接在<code>A</code>后出现的<code>B</code>（兄弟元素）</p>
+</li>
+<li><p><code>col || td</code>        列选择器</p>
+</li>
+<li><p><code>[attr[=value]] &#123;&#125;</code>        属性选择器（属性与属性值必须完全匹配）</p>
+<ul>
+<li><code>*[href] &#123;&#125;</code>        包含<code>href</code>属性的所有元素</li>
+<li><code>a[href] &#123;&#125;</code>        包含<code>href</code>属性的所有<code>&lt;a&gt;</code>元素	</li>
+<li><code>a[href][title] &#123;&#125;</code>        包含<code>href``+``title</code>属性的<code>&lt;a&gt;</code>元素</li>
+<li><code>a[href=&quot;...&quot;] &#123;&#125;</code>        包含指定<code>href</code>属性值的所有<code>&lt;a&gt;</code>元素</li>
+<li><code>a[class=&quot;one two&quot;] &#123;&#125;</code>        某个元素<code>class=&quot;one two&quot;</code>则必须两个属性都写上</li>
+<li><code>a[class~=&quot;one&quot;] &#123;&#125;</code>        根据属性值中的词列表的<strong>某个词</strong>进行选择：<code>~</code></li>
+<li><code>a[value^=&quot;def&quot;] &#123;&#125;</code>        选择<code>value</code>属性值以<code>def</code><strong>开头</strong>的所有元素</li>
+<li><code>a[value$=&quot;def&quot;] &#123;&#125;</code>        选择<code>value</code>属性值以<code>def</code><strong>结尾</strong>的所有元素</li>
+<li><code>a[value*=&quot;def&quot;] &#123;&#125;</code>        选择<code>value</code>属性值中包含<strong>子串</strong><code>def</code>的所有元素</li>
+<li><code>a[value|=&quot;def&quot;] &#123;&#125;</code>        选择<code>value</code>属性等于<code>def</code>或以<code>def-</code>开头的所有元素</li>
+</ul>
+</li>
+</ul>
+<p><strong>选择器优先级算法：</strong></p>
+<ul>
+<li>每个规则对应一个初始<code>4</code>位数<code>0、0、0、0</code></li>
+<li>若是行内选择符，则加<code>1、0、0、0</code></li>
+<li>若是<code>ID</code>选择符，则加<code>0、1、0、0</code></li>
+<li>若是类选择符&#x2F;伪类选择符，则加<code>0、0、1、0</code></li>
+<li>若是元素选择符，则加<code>0、0、0、1</code></li>
+</ul>
+<p><strong>优先级（递减）：</strong></p>
+<ul>
+<li>首先<code>ID</code>选择器</li>
+<li>类选择器        <strong>属性选择器</strong>（例<code>[type=&quot;radio&quot;]</code>）        <strong>伪类</strong>（例<code>:hover</code>）</li>
+<li>标签选择器        <strong>伪元素</strong>（例<code>::before</code>）</li>
+<li>通配选择器</li>
+</ul>
+<p><strong>其他：</strong></p>
+<ul>
+<li>带有 <strong><code>!important</code></strong> 标记的样式属性的优先级最高</li>
+<li><strong>内联样式</strong><code>&gt;</code><strong>内部样式</strong><code>&gt;</code><strong>外部样式</strong><code>&gt;</code><strong>浏览器用户自定义样式</strong><code>&gt;</code><strong>浏览器默认样式</strong></li>
+<li><strong>内部样式（</strong>写到<code>head</code>中的<code>style</code>标签中的样式<strong>）</strong></li>
+<li><strong>通配选择符</strong>（<code>*</code>）<strong>关系选择符</strong>（<code>+``&gt;``~``&#39;&#39;``||</code>）<strong>否定伪类</strong>（<code>:not()</code>）对优先级没有影响</li>
+</ul>
+<h2 id="CSS-伪类"><a href="#CSS-伪类" class="headerlink" title="CSS 伪类"></a>CSS 伪类</h2><p>伪类用于定义元素的<strong>特殊状态</strong></p>
+<ul>
+<li><code>a:hover &#123;&#125;</code>        选择鼠标悬停的<code>&lt;a&gt;</code>元素                </li>
+<li><code>a:active &#123;&#125; </code>        选择活动的<code>&lt;a&gt;</code>元素（鼠标按下时）</li>
+<li><code>a:visited &#123;&#125;</code>        选择所有被访问过的<code>&lt;a&gt;</code>元素</li>
+<li><code>input:focus &#123;&#125;</code>         选择获得焦点的<code>&lt;input&gt;</code>元素</li>
+<li><code>:not(p) &#123;&#125;</code>        选择每个非<code>&lt;p&gt;</code>元素的元素</li>
+<li><code>p:first-child &#123;&#125;</code>        选择作为其父的首个子元素的每个<code>&lt;p&gt;</code>元素</li>
+<li><code>p:first-of-type &#123;&#125;</code>        选择作为其父的首个<code>&lt;p&gt;</code>元素的每个<code>&lt;p&gt;</code>元素</li>
+<li><code>p:last-child &#123;&#125;</code>        选择作为其父的最后一个子元素的每个<code>&lt;p&gt;</code>元素</li>
+<li><code>p:last-of-type &#123;&#125;</code>        选择作为其父的最后一个<code>&lt;p&gt;</code>元素的每个<code>&lt;p&gt;</code>元素</li>
+<li><code>p:nth-child(n) &#123;&#125;</code>        选择作为其父的第<code>n</code>个子元素的每个<code>&lt;p&gt;</code>元素</li>
+<li><code>p:nth-last-child(n) &#123;&#125;</code>        选择作为其父的倒数第<code>n</code>个子元素的每个<code>&lt;p&gt;</code>元素</li>
+<li><code>p:only-child &#123;&#125;</code>        选择作为其父的唯一子元素的每个<code>&lt;p&gt;</code>元素</li>
+<li><code>p:nth-of-type(n) &#123;&#125;</code>        选择作为其父的第<code>n</code>个<code>&lt;p&gt;</code>元素的每个<code>&lt;p&gt;</code>元素</li>
+<li><code>p:nth-last-of-type(n) &#123;&#125;</code>        选择作为其父的倒数第<code>n</code>个<code>&lt;p&gt;</code>元素的每个<code>&lt;p&gt;</code>元素</li>
+</ul>
+<h2 id="CSS-伪元素"><a href="#CSS-伪元素" class="headerlink" title="CSS 伪元素"></a>CSS 伪元素</h2><p>伪元素用于设置<strong>元素指定部分</strong>的样式</p>
+<ul>
+<li><code>p::after &#123;&#125;</code>        在每个<code>&lt;p&gt;</code>元素之后插入内容</li>
+<li><code>p::before &#123;&#125;</code>        在每个<code>&lt;p&gt;</code>元素之前插入内容</li>
+<li><code>p::first-letter &#123;&#125;</code>        选择每个<code>&lt;p&gt;</code>元素的首字母</li>
+<li><code>p::first-line &#123;&#125;</code>        选择每个<code>&lt;p&gt;</code>元素的首行</li>
+<li><code>p::selection &#123;&#125;</code>        选择用户选择的元素部分（比如：选中的文本）</li>
+</ul>
+</div></section><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="Donate" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><span class="icon iconify" data-icon="ri:hand-coin-line"></span></span><div id="reward-comment">给钱多不好意思 谢谢</div><div id="qr" style="display:none;"><div style="display:inline-block"><a href="/alipay.png"><img loading="lazy" src="/alipay.png" alt="支付宝" title="支付宝"></a><div><span style="color:#00A3EE"><span class="icon iconify" data-icon="ri:alipay-line"></span></span></div></div><div style="display:inline-block"><a href="/wepay.png"><img loading="lazy" src="/wepay.png" alt="微信支付" title="微信支付"></a><div><span style="color:#2DC100"><span class="icon iconify" data-icon="ri:wechat-pay-line"></span></span></div></div></div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>Post author: </strong>Jasinn</li><li class="post-copyright-link"><strong>Post link: </strong><a href="https://www.aozakiaoko.cn/2022/07/11/DOM-CSS/" title="DOM操作与CSS选择器">https://www.aozakiaoko.cn/2022/07/11/DOM-CSS/</a></li><li class="post-copyright-license"><strong>Copyright Notice: </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><span class="icon iconify" data-icon="ri:creative-commons-line"></span><span class="icon iconify" data-icon="ri:creative-commons-by-line"></span><span class="icon iconify" data-icon="ri:creative-commons-nc-line"></span><span class="icon iconify" data-icon="ri:creative-commons-sa-line"></span></a> unless otherwise stated.</li></ul></article><div class="post-nav"><div class="post-nav-item"></div><div class="post-nav-item"><a class="post-nav-next" href="/2022/07/10/GIT/" rel="next" title="Git 基本操作"><span class="post-nav-text">Git 基本操作</span><span class="icon iconify" data-icon="ri:arrow-right-s-line"></span></a></div></div></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2022 </span><span class="with-love" id="animate"><span class="icon iconify" data-icon="ri:cloud-line"></span></span><span class="author"> Jasinn</span></div><div class="powered"><span>Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> v6.2.0</span><span class="footer-separator">|</span><span>Theme - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.10.4</span></div></footer></div><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><span class="icon iconify" data-icon="ri:arrow-up-s-line"></span><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a></body></html>
